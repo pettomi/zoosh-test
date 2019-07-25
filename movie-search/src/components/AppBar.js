@@ -61,7 +61,8 @@ class CustomAppbar extends React.Component {
                 fetchMovieWiki(obj.label).then(wiki => {
                     this.dispatch(setWiki(wiki));
                     this.dispatch(push({
-                        pathname: "/wiki"
+                        pathname: "/wiki",
+                        search: this.search
                     }))
                 });
                 fetchMovieDetails(obj.value).then(movie => {
@@ -82,7 +83,7 @@ class CustomAppbar extends React.Component {
 
     render() {
         const { classes, movies = [], ...rest } = this.props;
-        const { createOptions, handleChange, handleInputChange } = this;
+        const { createOptions, handleChange, handleInputChange, search } = this;
 
         const children = React.Children.map(this.props.children, (child => {
             return React.cloneElement(child, { ...rest, ...this.state });
@@ -119,6 +120,7 @@ CustomAppbar.propTypes = {
 
 const mapStateToProps = state => ({
     movies: state.entities.movies,
+    search: state.router.location.search
   });
 
 export default compose(

@@ -1,10 +1,11 @@
 import { withStyles } from '@material-ui/core';
-import { default as React, useState } from 'react';
+import { default as React, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import { fetchMovieWiki, fetchSimilarMovies } from '../Data/DataFetcher';
-import { setWiki } from '../Store/entitiesActions';
+import { fetchMovieWiki, fetchSimilarMovies, fetchMovieDetails } from '../Data/DataFetcher';
+import { setWiki, setMovieDetail } from '../Store/entitiesActions';
 import MovieCard from './MovieCard';
+import { push } from 'connected-react-router'
 
 const styles = theme => ({
   root: {
@@ -20,8 +21,34 @@ const styles = theme => ({
 
 function WikiViewer(props) {
   const [similarMovies, setSimilarMovies] = useState(null);
-  const { wiki, movieDetail, dispatch } = props;
+  const { wiki, movieDetail, dispatch, search } = props;
   const { classes, ...rest } = props
+
+  useEffect(() => {
+    let params = new URLSearchParams(search);
+
+    if (!search && movieDetail) {
+      updateId(movieDetail.id);
+
+    } else if (search) {
+      const id = params.get("id");
+      fetchMovieDetails(id).then(movie => {
+        dispatch(setMovieDetail(movie))
+        fetchMovieWiki(movie.title).then(wiki => {
+          dispatch(setWiki(wiki));
+        })
+      })
+    }
+  }, [search]);
+
+  const updateId = (id) => {
+    let params = new URLSearchParams();
+    params.append("id", id);
+    dispatch(push({
+      pathname: "wiki",
+      search: params.toString()
+    }))
+  }
 
   const getSimilarMovies = () => {
     setSimilarMoviesState(movieDetail.id);
@@ -32,6 +59,7 @@ function WikiViewer(props) {
       dispatch(setWiki(wiki));
     })
     setSimilarMoviesState(movie.id);
+    updateId(movie.id);
   }
 
   const setSimilarMoviesState = (id) => {
@@ -56,7 +84,8 @@ function WikiViewer(props) {
 
 const mapStateToProps = state => ({
   wiki: state.entities.wiki,
-  movieDetail: state.entities.movieDetail
+  movieDetail: state.entities.movieDetail,
+  search: state.router.location.search
 });
 
 

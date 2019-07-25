@@ -49,7 +49,7 @@ const customStyles = {
 }
 
 function CustomizedInputBase(props) {
-    const { classes, options, onChange, onInputChange, dispatch, movies } = props;
+    const { classes, options, onChange, onInputChange, dispatch, search } = props;
 
     return (
         <Paper className={classes.root} elevation={1}>
@@ -63,6 +63,7 @@ function CustomizedInputBase(props) {
                 onChange={onChange}
                 onInputChange={onInputChange}
                 dispatch={dispatch}
+                search={search}
             />
         </Paper>
     );

@@ -46,6 +46,10 @@ function MovieCard(props) {
         onExpand();
     }
 
+    const handleWikiClick = () => {
+        window.open(wiki.content_urls.desktop.page);
+    }
+
     return (
         <Card className={classes.card}>
             <CardHeader
@@ -65,7 +69,9 @@ function MovieCard(props) {
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {wiki.extract}
-                    <a href={wiki.content_urls.desktop.page}>Wikipedia</a>
+                    <Link onClick={handleWikiClick}>
+                        <Typography body1>Go to WikiPedia</Typography>
+                    </Link>
                 </Typography>
             </CardContent>
             <CardActions>

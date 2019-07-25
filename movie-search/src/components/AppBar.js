@@ -57,7 +57,7 @@ class CustomAppbar extends React.Component {
 
     handleChange(obj, action){
         switch(action.action){
-            case "select-option":{
+            case "select-option": 
                 fetchMovieWiki(obj.label).then(wiki => {
                     this.dispatch(setWiki(wiki));
                     this.dispatch(push({
@@ -66,8 +66,8 @@ class CustomAppbar extends React.Component {
                 });
                 fetchMovieDetails(obj.value).then(movie => {
                     this.dispatch(setMovieDetail(movie));
-                })
-            }
+                });
+                break;
             default: return
         }
     }

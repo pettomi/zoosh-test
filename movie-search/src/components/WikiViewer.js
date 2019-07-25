@@ -1,10 +1,10 @@
-import { Typography, withStyles } from '@material-ui/core'
+import { withStyles } from '@material-ui/core';
 import { default as React, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
-import MovieCard from './MovieCard'
-import { fetchSimilarMovies, fetchMovieWiki } from '../Data/DataFetcher';
+import { fetchMovieWiki, fetchSimilarMovies } from '../Data/DataFetcher';
 import { setWiki } from '../Store/entitiesActions';
+import MovieCard from './MovieCard';
 
 const styles = theme => ({
   root: {
@@ -34,7 +34,7 @@ function WikiViewer(props) {
     setSimilarMoviesState(movie.id);
   }
 
-  const setSimilarMoviesState= (id) => {
+  const setSimilarMoviesState = (id) => {
     fetchSimilarMovies(id).then(similarMovies => {
       setSimilarMovies(similarMovies.results);
     })

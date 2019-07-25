@@ -1,11 +1,10 @@
 import Button from '@material-ui/core/Button';
-import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import { withStyles } from '@material-ui/core/styles';
 import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import React from 'react';
-import Select from 'react-select'
+import Select from 'react-select';
 import { compose } from 'recompose';
 
 const styles = theme => ({

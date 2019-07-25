@@ -26,10 +26,6 @@ function Blank({ classes }) {
     )
 }
 
-const mapStateToProps = state => ({
-    loading: state.entities.loading
-});
-
 export default compose(
     withStyles(styles),
 )(Blank);

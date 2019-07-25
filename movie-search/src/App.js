@@ -57,6 +57,12 @@ const theme = createMuiTheme({
       textAlign: 'left',
       fontWeight: '600',
     },
+    body1: {
+      color: "#000000",
+      fontWeight: 500,
+      fontSize: "0.8125rem",
+      letterSpacing: "0.01071em",
+    },
     body2: {
       color: "#000000",
       fontWeight: 400,

@@ -70,7 +70,7 @@ function MovieCard(props) {
                 <Typography variant="body2" color="textSecondary" component="p">
                     {wiki.extract}
                     <Link onClick={handleWikiClick}>
-                        <Typography body1>Go to WikiPedia</Typography>
+                        <Typography body1>Go to Wikipedia</Typography>
                     </Link>
                 </Typography>
             </CardContent>

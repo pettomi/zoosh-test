@@ -35,6 +35,12 @@ const styles = theme => ({
     avatar: {
         backgroundColor: theme.palette.primary.main,
     },
+    similarExpand: {
+        marginLeft: theme.spacing.unit * 4
+    },
+    cardActions: {
+        padding: 0,
+    }
 });
 
 function MovieCard(props) {
@@ -58,7 +64,7 @@ function MovieCard(props) {
                         {wiki.title[0]}
                     </Avatar>
                 }
-                title={<Typography h3>{wiki.title}</Typography>}
+                title={<Typography variant="h3">{wiki.title}</Typography>}
                 subheader={wiki.description}
             />
             <CardMedia
@@ -68,13 +74,14 @@ function MovieCard(props) {
             />
             <CardContent>
                 <Typography variant="body2" color="textSecondary" component="p">
-                    {wiki.extract}
-                    <Link onClick={handleWikiClick}>
-                        <Typography body1>Go to Wikipedia</Typography>
-                    </Link>
+                    {wiki.extract}    
                 </Typography>
+                <Link onClick={handleWikiClick}>
+                        <Typography variant="body1">Go to Wikipedia</Typography>
+                </Link>
             </CardContent>
-            <CardActions>
+            <CardActions className={classes.cardActions}>
+                <Typography variant="h3" className={classes.similarExpand}>Similar movies you might like</Typography>
                 <IconButton
                     className={clsx(classes.expand, {
                         [classes.expandOpen]: expanded,
@@ -88,10 +95,9 @@ function MovieCard(props) {
             </CardActions>
             <Collapse in={expanded} timeout="auto" unmountOnExit>
                 <CardContent>
-                    <Typography paragraph>Similar:</Typography>
-                    {similarMovies && similarMovies.map(movie => (
-                        <Link onClick={() => onClick(movie)}>
-                            <Typography h3>
+                    {similarMovies && similarMovies.map((movie, i) => (
+                        <Link key={i} onClick={() => onClick(movie)}>
+                            <Typography variant="body1">
                                 {movie.title}
                             </Typography>
                         </Link>

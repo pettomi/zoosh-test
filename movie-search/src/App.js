@@ -50,7 +50,7 @@ const theme = createMuiTheme({
       color: '#e1dfdd'
     },
     h3: {
-      color: "#0361af",
+      color: '#000000',
       fontSize: "0.9rem",
       lineHeight: 1.33,
       letterSpacing: "0em",

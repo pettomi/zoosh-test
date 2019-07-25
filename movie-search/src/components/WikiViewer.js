@@ -1,4 +1,4 @@
-import { withStyles } from '@material-ui/core';
+import { withStyles, CircularProgress } from '@material-ui/core';
 import { default as React, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
@@ -17,6 +17,11 @@ const styles = theme => ({
     textAlign: "left",
     backgroundColor: theme.palette.background.paper,
   },
+  circularProgress: {
+    position: "fixed",
+    top: "40%",
+    left: "45%"
+  }
 });
 
 function WikiViewer(props) {
@@ -70,14 +75,14 @@ function WikiViewer(props) {
 
   return (
     <div className={classes.root}>
-      {wiki && movieDetail &&
+      {(wiki && movieDetail) ? 
         <MovieCard
           onExpand={getSimilarMovies}
           similarMovies={similarMovies}
           onClick={handleClick}
           {...rest}
         />
-      }
+      : <CircularProgress className={classes.circularProgress}></CircularProgress>}
     </div>
   );
 }

@@ -1,9 +1,10 @@
 import { Typography, withStyles } from '@material-ui/core'
-import { default as React, useState} from 'react';
+import { default as React, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
 import MovieCard from './MovieCard'
-import { fetchSimilarMovies } from '../Data/DataFetcher';
+import { fetchSimilarMovies, fetchMovieWiki } from '../Data/DataFetcher';
+import { setWiki } from '../Store/entitiesActions';
 
 const styles = theme => ({
   root: {
@@ -19,35 +20,47 @@ const styles = theme => ({
 
 function WikiViewer(props) {
   const [similarMovies, setSimilarMovies] = useState(null);
-  const {wiki, movieDetail} = props;
-  const {classes, ...rest} = props
+  const { wiki, movieDetail, dispatch } = props;
+  const { classes, ...rest } = props
 
   const getSimilarMovies = () => {
-    fetchSimilarMovies(movieDetail.id).then(similar => {
-      setSimilarMovies(similar.results)
+    setSimilarMoviesState(movieDetail.id);
+  }
+
+  const handleClick = (movie) => {
+    fetchMovieWiki(movie.title).then(wiki => {
+      dispatch(setWiki(wiki));
+    })
+    setSimilarMoviesState(movie.id);
+  }
+
+  const setSimilarMoviesState= (id) => {
+    fetchSimilarMovies(id).then(similarMovies => {
+      setSimilarMovies(similarMovies.results);
     })
   }
 
   return (
     <div className={classes.root}>
-        {wiki && movieDetail &&
-          <MovieCard 
-            onExpand={getSimilarMovies} 
-            similarMovies={similarMovies} 
-            {...rest} 
-          />
-        }
+      {wiki && movieDetail &&
+        <MovieCard
+          onExpand={getSimilarMovies}
+          similarMovies={similarMovies}
+          onClick={handleClick}
+          {...rest}
+        />
+      }
     </div>
   );
 }
 
 const mapStateToProps = state => ({
-    wiki: state.entities.wiki,
-    movieDetail: state.entities.movieDetail
-  });
+  wiki: state.entities.wiki,
+  movieDetail: state.entities.movieDetail
+});
 
 
 export default compose(
-    withStyles(styles),
-    connect(mapStateToProps, null)
+  withStyles(styles),
+  connect(mapStateToProps, null)
 )(WikiViewer);

@@ -59,6 +59,7 @@ function CustomizedInputBase(props) {
             </Button>
             <Select
                 options={options}
+                placeholder="Search IMDb"
                 styles={customStyles}
                 onChange={onChange}
                 onInputChange={onInputChange}

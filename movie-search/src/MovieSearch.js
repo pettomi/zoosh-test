@@ -10,14 +10,17 @@ import { history, store } from './Store/Store';
 import Blank from './components/Blank';
 import ErrorBoundary from './components/ErrorBoundary';
 import AppBar from './components/AppBar';
-import WikiViewer from './components/WikiViewer';
+// import WikiViewer from './components/WikiViewer';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-const MovieViewer = React.lazy(() => import('./components/MovieViewer'));
+const WikiViewer = React.lazy(() => import('./components/WikiViewer'));
 
 const styles = theme => ({
   root: {
     display: 'flex',
+  },
+  progress: {
+    margin: theme.spacing.unit * 2,
   },
 });
 
@@ -39,7 +42,7 @@ class MovieSearch extends React.Component {
                 )} />
                 <Route exact path="/wiki" render={() =>
                     <AppBar>
-                        <Suspense fallback={<> </>}>
+                        <Suspense fallback={<CircularProgress className={classes.progress} />}>
                             <WikiViewer />
                         </Suspense>
                     </AppBar>

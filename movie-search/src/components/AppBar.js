@@ -5,9 +5,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { compose } from 'recompose';
 import SearchBar from './SearchBar';
-import { fetchMovies, fetchMovieWiki } from '../Data/DataFetcher'
+import { fetchMovies, fetchMovieWiki, fetchMovieDetails } from '../Data/DataFetcher'
 import {connect} from 'react-redux'
-import {setMovies, setWiki} from '../Store/entitiesActions'
+import {setMovies, setWiki, setMovieDetail} from '../Store/entitiesActions'
 import { push } from 'connected-react-router';
 
 const styles = theme => ({
@@ -49,24 +49,23 @@ class CustomAppbar extends React.Component {
 
     createOptions(movies) {
         const options = movies.map(m => ({
-            label: m.Title,
-            value: m.imdbID
+            label: m.title,
+            value: m.id
         }))
-        console.log(options);
         return options;
     }
 
     handleChange(obj, action){
-        console.log(obj, action)
         switch(action.action){
             case "select-option":{
-                console.log("selected", obj)
                 fetchMovieWiki(obj.label).then(wiki => {
-                    console.log("wiki", wiki);
                     this.dispatch(setWiki(wiki));
                     this.dispatch(push({
                         pathname: "/wiki"
                     }))
+                });
+                fetchMovieDetails(obj.value).then(movie => {
+                    this.dispatch(setMovieDetail(movie));
                 })
             }
             default: return
@@ -74,9 +73,8 @@ class CustomAppbar extends React.Component {
     }
 
     handleInputChange(value, action){
-        if(value.length > 5){
+        if(value.length > 0){
             fetchMovies(value).then(movies => {
-                console.log("movies", movies);
                 this.dispatch(setMovies(movies));
             });
         }

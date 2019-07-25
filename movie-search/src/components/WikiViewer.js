@@ -1,30 +1,49 @@
 import { Typography, withStyles } from '@material-ui/core'
-import { default as React} from 'react';
+import { default as React, useState} from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'recompose';
+import MovieCard from './MovieCard'
+import { fetchSimilarMovies } from '../Data/DataFetcher';
 
 const styles = theme => ({
   root: {
     width: '100%',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
     backgroundColor: theme.palette.background.paper,
   },
 });
 
 function WikiViewer(props) {
-  const {classes, wiki = {}} = props;
-  const extract = wiki ? wiki.extract : "";
+  const [similarMovies, setSimilarMovies] = useState(null);
+  const {wiki, movieDetail} = props;
+  const {classes, ...rest} = props
+
+  const getSimilarMovies = () => {
+    fetchSimilarMovies(movieDetail.id).then(similar => {
+      setSimilarMovies(similar.results)
+    })
+  }
 
   return (
     <div className={classes.root}>
-        <Typography variant='body2'>
-            {extract}
-        </Typography>
+        {wiki && movieDetail &&
+          <MovieCard 
+            onExpand={getSimilarMovies} 
+            similarMovies={similarMovies} 
+            {...rest} 
+          />
+        }
     </div>
   );
 }
 
 const mapStateToProps = state => ({
     wiki: state.entities.wiki,
+    movieDetail: state.entities.movieDetail
   });
 
 

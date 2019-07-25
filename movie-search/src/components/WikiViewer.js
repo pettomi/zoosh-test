@@ -12,7 +12,7 @@ const styles = theme => ({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    textAlign: "center",
+    textAlign: "left",
     backgroundColor: theme.palette.background.paper,
   },
 });

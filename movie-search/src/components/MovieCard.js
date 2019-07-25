@@ -14,12 +14,13 @@ import React from 'react';
 
 const styles = theme => ({
   card: {
-    maxWidth: 345,
+    maxWidth: 545,
     backgroundColor: theme.palette.secondary.main,
   },
   media: {
     height: 0,
-    paddingTop: '56.25%', // 16:9
+    backgroundSize: "contain",
+    paddingTop: '75%', // 4:3
   },
   expand: {
     transform: 'rotate(0deg)',
